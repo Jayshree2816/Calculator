@@ -9,7 +9,7 @@ export default class App extends Component {
       calculationText: '',
       operations: []
     };
-    this.operations = ['AC','DEL', '+', '-', '*', '/'];
+    this.operations = ['AC','DEL', '+', '-', '*', '/', 'AC'];
   }
 
   calculateResult() {
@@ -25,6 +25,8 @@ export default class App extends Component {
     switch (text.slice(-1)) {
       case 'AC':
         this.setState({
+          resultText: '',
+          calculationText: '',
           operations: [],
         })
         break
@@ -47,6 +49,13 @@ export default class App extends Component {
   }
   operate(operation) {
     switch (operation) {
+      case 'AC':
+        this.setState({
+          resultText: '',
+          calculationText: '',
+          operations: [],
+        })
+      break
       case 'DEL':
         console.log(this.state.resultText);
         let text = this.state.resultText.split('');
@@ -76,7 +85,7 @@ export default class App extends Component {
   render() {
     let rows = [];
     let nums = [[7, 8, 9], [4, 5, 6], [1, 2, 3], ['.', 0, '=']];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < nums.length; i++) {
       let row = [];
       for (let j = 0; j < 3; j++) {
         row.push(
@@ -91,7 +100,7 @@ export default class App extends Component {
       rows.push(<View  key={i} style={styles.row}>{row}</View>);
     }
     let ops = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < this.operations.length; i++) {
       ops.push(
         <TouchableOpacity
           key={this.operations[i]}
